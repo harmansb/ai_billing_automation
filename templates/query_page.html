@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing AI Query</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; background-color: #f0f2f5; color: #333; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding-top: 20px; padding-bottom: 20px; }
+        .container { width: 100%; max-width: 800px; background-color: #fff; padding: 25px 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #1c5a94; text-align: center; margin-bottom: 25px; }
+        h2 { color: #1c5a94; margin-top: 30px; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;}
+        h3 { color: #333; margin-top: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+        textarea { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; min-height: 90px; font-size: 1rem; resize: vertical; }
+        textarea:focus { border-color: #007bff; box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); outline: none;}
+        input[type="submit"] { background-color: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; transition: background-color 0.2s ease-in-out; display: block; width: 100%; }
+        input[type="submit"]:hover { background-color: #0056b3; }
+        .results-section { margin-top: 30px; }
+        .error-message { color: #c0392b; background-color: #f9e0de; border: 1px solid #f1c1bc; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        pre { background-color: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; line-height: 1.5; }
+        .result-item { margin-bottom: 10px; padding: 12px; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; }
+        p { line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ask the Billing AI</h1>
+
+        {% if error_message %}
+            <div class="error-message">
+                <strong>Error:</strong> {{ error_message }}
+            </div>
+        {% endif %}
+
+        <form action="{{ url_for('handle_query_submission') }}" method="GET">
+            <label for="query">Enter your billing query:</label>
+            <textarea id="query" name="query" rows="4" required>{{ current_query or '' }}</textarea>
+            <input type="submit" value="Submit Query">
+        </form>
+
+        {% if submitted_query and generated_sql is not none %}
+        <div class="results-section">
+            <h2>Query Details</h2>
+            <p><strong>Your Query:</strong> {{ submitted_query }}</p>
+            <h3>Generated SQL:</h3>
+            <pre>{{ generated_sql }}</pre>
+
+            <h3>Results:</h3>
+            {% if query_results %}
+                <pre>{{ query_results }}</pre>
+            {% else %}
+                <p>No results returned.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

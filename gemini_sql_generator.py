@@ -57,7 +57,7 @@ def generate_sql_from_prompt(user_query: str) -> str:
 
     # ���️ Post-processing Validation
     #validate_generated_sql(raw_sql)
-    print(raw_sql)
+    #print(raw_sql)
     return raw_sql
 
 
