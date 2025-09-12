@@ -17,7 +17,7 @@ vertexai.init(
 gemini_model = GenerativeModel("gemini-1.5-flash")
 
 # Load prompt context from external file
-with open("./prompt_context.txt", "r") as file:
+with open("prompt_context.txt", encoding="utf-8") as file:
     prompt_context = file.read()
 
 def generate_sql_from_prompt(user_query: str) -> str:
