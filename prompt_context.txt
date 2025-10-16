@@ -151,3 +151,4 @@ ORDER BY total_cost DESC
 ---
 
 Generate SQL queries with high accuracy, strict formatting, and aligned to these instructions.
+
